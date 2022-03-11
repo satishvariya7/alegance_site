@@ -4,6 +4,7 @@ import Sidebar from "../sidebar/sidebar";
 import Header from "../header/header";
 import { HomeOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const styles = {
   breadcrumb: {
@@ -18,48 +19,18 @@ const styles = {
 };
 export default function Users() {
   const [userData, setUserData] = useState(null);
-  const columns = [
+  const columns = [    
     { title: "Name", dataIndex: "name", key: "name" },
-    { title: "Age", dataIndex: "age", key: "age" },
+    { title: "Phone", dataIndex: "phone", key: "phone" },
     { title: "Email", dataIndex: "email", key: "email" },
+    { title: "Website", dataIndex: "website", key: "website" },
     {
-      title: "Action",
+      title: "Album",
       dataIndex: "",
       key: "x",
-      render: () => <a>Delete</a>,
-    },
-  ];
-  const data = [
-    {
-      key: 1,
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      description:
-        "My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.",
-    },
-    {
-      key: 2,
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      description:
-        "My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.",
-    },
-    {
-      key: 3,
-      name: "Not Expandable",
-      age: 29,
-      address: "Jiangsu No. 1 Lake Park",
-      description: "This not expandable",
-    },
-    {
-      key: 4,
-      name: "Joe Black",
-      age: 32,
-      address: "Sidney No. 1 Lake Park",
-      description:
-        "My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.",
+      render: function(item){        
+        return <Link to={`/user/album/${item.id}`}>View</Link>
+      }
     },
   ];
   useEffect(function () {
@@ -69,11 +40,13 @@ export default function Users() {
         if (res.data) {
           let data = [];
           for (let index = 0; index < res.data.length; index++) {
-            data.push({
+            data.push({              
               key: index,
+              id:res.data[index].id,
               name: res.data[index].name,
-              age: 32,
+              phone: res.data[index].phone,
               email: res.data[index].email,
+              website: res.data[index].website,
               address: `${res.data[index].address.street}, ${res.data[index].address.suite}, ${res.data[index].address.city}`,
             });
           }
