@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, List, Table } from "antd";
+import { Breadcrumb, Card, Col, Row } from "antd";
 import Sidebar from "../sidebar/sidebar";
 import Header from "../header/header";
 import { HomeOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const styles = {
   breadcrumb: {
@@ -20,17 +20,18 @@ const styles = {
 export default function AlbumDetails() {
   const [userData, setUserData] = useState(null);
   const { albumId, userId } = useParams();
-  
+
   useEffect(function () {
     axios
       .get(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
       .then((res) => {
-        if (res.data) {                    
+        if (res.data) {
           setUserData(res.data);
         }
       })
       .catch((err) => {});
   }, []);
+  const { Meta } = Card;
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -55,8 +56,46 @@ export default function AlbumDetails() {
               </Breadcrumb>
             </div>
             <div>
-              <h1>User Details</h1>
-            </div>            
+              <div className="site-card-wrapper">
+                <Row gutter={16}>
+                  {userData &&
+                    userData.map((item, index) => {
+                      return (
+                        <Col span={8}>
+                          <Card
+                            key={index}
+                            hoverable
+                            style={{ width: 300 }}
+                            cover={
+                              <img
+                                alt="example"
+                                //src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+                                src={item.url}
+                              />
+                            }
+                          >
+                            <Meta
+                              title={item.title}
+                              description="www.instagram.com"
+                            />
+                          </Card>
+                        </Col>
+                      );
+                    })}
+
+                  {/* <Col span={8}>
+                    <Card title="Card title" bordered={false}>
+                      Card content
+                    </Card>
+                  </Col>
+                  <Col span={8}>
+                    <Card title="Card title" bordered={false}>
+                      Card content
+                    </Card>
+                  </Col> */}
+                </Row>
+              </div>
+            </div>
           </div>
         </div>
       </div>

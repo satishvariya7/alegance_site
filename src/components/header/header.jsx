@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PageHeader, Button, Menu, Dropdown, Image, Avatar } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
 
 const styles = {
   header: {
@@ -17,6 +17,11 @@ const styles = {
   },
 };
 export default function Header() {
+  const [userName, setUserName] = useState("Loading...");
+  useEffect(() => {
+    const userName = localStorage.getItem("username");
+    setUserName(userName);
+  }, []);
   const menu = (
     <Menu>
       <Menu.Item key={1}>
@@ -82,7 +87,7 @@ export default function Header() {
         <div style={styles.profile} key={1} overlay={menu}>
           <DropdownMenu key={1} />
           <span style={styles.profileName} key={2}>
-            Satish Variya
+            {userName}
           </span>
         </div>,
       ]}
