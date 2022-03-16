@@ -1,8 +1,9 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import { useEffect } from "react";
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+function Login({ profile }) {
   const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -10,7 +11,6 @@ export default function Login() {
     }
   }, []);
   const onFinish = (values) => {
-    debugger;
     const { password, username } = values;
     if (username == "Admin" && password == "Admin@123") {
       localStorage.setItem(
@@ -71,3 +71,11 @@ export default function Login() {
     </Form>
   );
 }
+
+const mapStateToProps = function ({ userState }) {
+  return {
+    profile: userState.user,
+  };
+};
+
+export default connect(mapStateToProps)(Login);
