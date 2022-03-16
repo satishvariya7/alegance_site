@@ -55,11 +55,7 @@ export default function Home() {
             <Breadcrumb style={styles.crumb}>
               <Breadcrumb.Item href="/">
                 <HomeOutlined />
-              </Breadcrumb.Item>
-              {/* <Breadcrumb.Item href="">
-          <UserOutlined />
-          <span>Application List</span>
-        </Breadcrumb.Item> */}
+              </Breadcrumb.Item>        
               <Breadcrumb.Item>Home</Breadcrumb.Item>
             </Breadcrumb>
           </div>
